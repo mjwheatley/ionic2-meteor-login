@@ -1,10 +1,11 @@
 import {NgModule, ErrorHandler} from "@angular/core";
-import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
+import {IonicApp, IonicModule, IonicErrorHandler} from "ionic-angular/es2015";
 import {Storage} from '@ionic/storage';
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
-import {HttpModule} from '@angular/http';
-import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate';
+import {TranslateModule, TranslateLoader} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {HttpClientModule, HttpClient} from "@angular/common/http";
 import {Constants} from "../../../both/Constants";
 import {AppComponent} from "./app.component";
 import {SplashScreen} from "@ionic-native/splash-screen";
@@ -29,6 +30,14 @@ import {AccountMenuPage} from "./pages/account/account-menu/account-menu";
 import {ChangePasswordPage} from "./pages/account/account-menu/change-password/change-password";
 import {EditProfilePage} from "./pages/account/account-menu/edit-profile/edit-profile";
 import {AddImageComponent} from "./components/add-image/add-image";
+
+// Ionic native plugins
+import {SplashScreen} from "@ionic-native/splash-screen";
+import {StatusBar} from "@ionic-native/status-bar";
+import {Device} from "@ionic-native/device";
+import {Camera} from "@ionic-native/camera";
+import {AndroidPermissions} from "@ionic-native/android-permissions";
+
 
 
 @NgModule({
@@ -69,14 +78,23 @@ import {AddImageComponent} from "./components/add-image/add-image";
             useClass: IonicErrorHandler
         },
         SplashScreen,
-        StatusBar
+        StatusBar,
+        Device,
+        Camera,
+        AndroidPermissions
     ],
     // Modules
     imports: [
         BrowserModule,
         FormsModule,
-        HttpModule,
-        TranslateModule.forRoot(),
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient]
+            }
+        }),
         IonicModule.forRoot(AppComponent, {
             //// http://ionicframework.com/docs/v2/api/config/Config/
             //mode: Constants.STYLE.MD,
@@ -92,4 +110,8 @@ export class AppModule {
     constructor() {
 
     }
+}
+
+export function createTranslateLoader(http:HttpClient) {
+    return new TranslateHttpLoader(http, '/i18n/', '.json');
 }

@@ -1,6 +1,6 @@
 import {Component, ViewChild, Input} from '@angular/core';
-import {Platform, ActionSheetController} from 'ionic-angular';
-import {TranslateService} from 'ng2-translate';
+import {Platform, ActionSheetController} from "ionic-angular/es2015";
+import {TranslateService} from "@ngx-translate/core";
 import {ImageHandler} from "../../utils/ImageHandler";
 import {Constants} from "../../../../../both/Constants";
 

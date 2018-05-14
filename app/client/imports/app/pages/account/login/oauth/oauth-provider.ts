@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController} from "ionic-angular/es2015";
 import {HomePage} from '../../../home/home';
-import {TranslateService} from 'ng2-translate';
+import {TranslateService} from "@ngx-translate/core";
 import {ToastMessenger} from "../../../../utils/ToastMessenger";
 import {Constants} from "../../../../../../../both/Constants";
 

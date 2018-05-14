@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController, Alert} from 'ionic-angular';
+import {NavController, Alert} from "ionic-angular/es2015";
 import {FormBuilder, Validators, AbstractControl, FormGroup} from '@angular/forms';
 import {MeteorComponent} from 'angular2-meteor';
 import {HomePage} from '../../../home/home';
 import {Constants} from "../../../../../../../both/Constants";
 import {FormValidator} from "../../../../utils/FormValidator";
 import {ToastMessenger} from "../../../../utils/ToastMessenger";
-import {TranslateService} from "ng2-translate";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: "create-account-card",

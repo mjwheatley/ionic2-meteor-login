@@ -1,8 +1,8 @@
 import {Component, OnInit, NgZone} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController} from "ionic-angular/es2015";
 import {MeteorComponent} from 'angular2-meteor';
 import {FormBuilder, Validators, AbstractControl, FormGroup} from '@angular/forms';
-import {TranslateService} from 'ng2-translate';
+import {TranslateService} from "@ngx-translate/core";
 import {ToastMessenger} from "../../../../utils/ToastMessenger";
 import {Constants} from "../../../../../../../both/Constants";
 // import {AddImageComponent} from '../../../../components/add-image/add-image';

@@ -54,7 +54,7 @@ This repository extends [ionic2-meteor-boilerplate](https://github.com/mjwheatle
                     * `app/public/images/`
                         * ***add_image_camera_photo.png***
                 * `app/client/imports/app/utils/`
-                    * ***ImageHandler.ts***
+                    * ***ImageService.ts***
                 * `app/both/`
                     * ***FileUtil.ts***
 * **Form validation and toast messages**

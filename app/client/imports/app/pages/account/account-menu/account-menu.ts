@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController} from "ionic-angular/es2015";
 import {MeteorComponent} from 'angular2-meteor';
-import {TranslateService} from "ng2-translate";
+import {TranslateService} from "@ngx-translate/core";
 import {INavigationMenuPage} from "../../../app.component";
 import {Constants} from "../../../../../../both/Constants";
 

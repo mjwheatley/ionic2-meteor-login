@@ -52,6 +52,27 @@ App.setPreference('BackupWebStorage', 'local');
 App.setPreference('StatusBarOverlaysWebView', 'true');
 //App.setPreference('StatusBarBackgroundColor', '#000000');
 
+App.configurePlugin('cordova-plugin-camera', {
+    CAMERA_USAGE_DESCRIPTION: "This application will use your phone's camera to take a selfie for your profile picture.",
+    PHOTOLIBRARY_USAGE_DESCRIPTION: "This application will access your photo library to select a photo for your profile picture."
+});
+
+App.appendToConfig(`
+    <platform name="android">
+        <custom-config-file target="AndroidManifest.xml" parent="/*">
+            <uses-feature android:name="android.hardware.camera" android:required="true" xmlns:android="http://schemas.android.com/apk/res/android" />
+            <uses-feature android:name="android.hardware.camera.autofocus" xmlns:android="http://schemas.android.com/apk/res/android" />
+            <uses-permission android:name="android.permission.CAMERA" xmlns:android="http://schemas.android.com/apk/res/android" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" xmlns:android="http://schemas.android.com/apk/res/android" />
+        </custom-config-file>
+    </platform>
+    <platform name="ios"> 
+        <config-file platform="ios" target="*-Info.plist" parent="UILaunchStoryboardName">
+            <string>CDVLaunchScreen</string>
+        </config-file>
+      </platform>
+`);
+
 App.accessRule('http://localhost:3000/*');
 App.accessRule('https://localhost:3000/*');
 App.accessRule('http://meteor.local');

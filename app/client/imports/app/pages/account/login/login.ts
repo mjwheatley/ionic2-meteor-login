@@ -1,8 +1,8 @@
 import {Component, OnInit, NgZone} from '@angular/core';
 import {MeteorComponent} from 'angular2-meteor';
-import {App, NavController} from 'ionic-angular';
+import {App, NavController} from "ionic-angular/es2015";
 import {Constants} from "../../../../../../both/Constants";
-import {TranslateService} from 'ng2-translate';
+import {TranslateService} from "@ngx-translate/core";
 @Component({
     selector: "page-login",
     templateUrl: "login.html"
