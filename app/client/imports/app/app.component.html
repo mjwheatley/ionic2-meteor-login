@@ -1,4 +1,4 @@
-<ion-menu #leftMenu [content]="content">
+<ion-menu #leftMenu [content]="content" [class.iphonex]="isIPhoneX" [attr.orientation]="getOrientation()">
     <ion-header>
         <ion-toolbar color="navbar">
             <ion-title>{{appName}}</ion-title>

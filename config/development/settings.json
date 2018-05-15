@@ -1,9 +1,10 @@
 {
   "public": {
-    "appName": "Ionic2-Meteor-Login"
+    "appName": "Ionic2-Meteor-Login",
+    "version": "0.0.1 (DEV)",
+    "environment": "DEVELOPMENT"
   },
   "private": {
-    "environment": "DEVELOPMENT",
     "oauth2": {
       "providers": {
         "google": {
@@ -17,5 +18,5 @@
       }
     }
   },
-  "sample": "config/development/settings.json"
+  "path": "/config/development/settings.json"
 }

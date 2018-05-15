@@ -28,6 +28,7 @@ angular-compilers
 session
 fortawesome:fontawesome
 chrismbeckett:toastr
+accounts-base
 accounts-password
 service-configuration
 mdg:camera

@@ -42,3 +42,22 @@ ion-label[floating] {
 img {
   object-fit: cover;
 }
+
+// Text wrap for alert radio labels
+ion-alert .alert-radio-group .alert-radio-label {
+  white-space: pre-wrap;
+}
+
+.user-select {
+  white-space: normal;
+  user-select: text;
+}
+
+.alert-message {
+  white-space: normal;
+  user-select: text;
+}
+
+ion-icon i.fa {
+  font-size: 21px;
+}

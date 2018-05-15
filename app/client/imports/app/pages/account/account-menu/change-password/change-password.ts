@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from "ionic-angular/es2015";
 import {MeteorComponent} from 'angular2-meteor';
+import {Session} from "meteor/session";
 import {TranslateService} from "@ngx-translate/core";
 import {FormBuilder, FormGroup, Validators, AbstractControl} from '@angular/forms';
 import {Constants} from "../../../../../../../both/Constants";
 import {ToastMessenger} from "../../../../utils/ToastMessenger";
 import {FormValidator} from "../../../../utils/FormValidator";
-
+declare var Accounts;
 @Component({
     selector: "page-change-password",
     templateUrl: "change-password.html"
@@ -73,7 +74,7 @@ export class ChangePasswordPage extends MeteorComponent implements OnInit {
                             if (error.reason === Constants.METEOR_ERRORS.INCORRECT_PASSWORD) {
                                 console.log("Incorrect password");
                                 Session.set(Constants.SESSION.INCORRECT_PASSWORD, true);
-                                self.formControl.password.updateValueAndValidity(true);
+                                self.formControl.password.updateValueAndValidity({onlySelf:true});
                             } else if (error.reason === Constants.METEOR_ERRORS.NO_PASSWORD) {
                                 message = self.translate.instant("login-card.errors.socialSignIn");
                             }

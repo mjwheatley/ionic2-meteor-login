@@ -2,7 +2,8 @@ import {Component, OnInit, NgZone} from '@angular/core';
 import {NavController} from "ionic-angular/es2015";
 import {FormBuilder, Validators, AbstractControl, FormGroup} from '@angular/forms';
 import {MeteorComponent} from 'angular2-meteor';
-import {HomePage} from '../../../home/home';
+import {Meteor} from "meteor/meteor";
+import {Session} from "meteor/session";
 import {Constants} from "../../../../../../../both/Constants";
 import {FormValidator} from "../../../../utils/FormValidator";
 import {ToastMessenger} from "../../../../utils/ToastMessenger";
@@ -52,21 +53,25 @@ export class LoginCardComponent extends MeteorComponent implements OnInit {
             password: this.loginForm.controls['password']
         };
 
-        this.autorun(() => {
-            if (Meteor.user()) {
-                this.nav.setRoot(HomePage);
-            }
+        Meteor.defer(() => {
+            this.autorun(() => this.zone.run(() => {
+                Session.get(Constants.SESSION.REGISTERED_ERROR);
+                Session.get(Constants.SESSION.INCORRECT_PASSWORD);
+                this.loginInputs.email = Session.get(Constants.SESSION.EMAIL) || null;
+            }));
         });
-
-        this.autorun(() => this.zone.run(() => {
-            Session.get(Constants.SESSION.REGISTERED_ERROR);
-            Session.get(Constants.SESSION.INCORRECT_PASSWORD);
-            this.loginInputs.email = Session.get(Constants.SESSION.EMAIL) || null;
-        }));
     }
 
     public onSubmit():void {
         var self = this;
+        if (!Meteor.status().connected) {
+            new ToastMessenger().toast({
+                type: "error",
+                message: self.translate.instant("general.noServerConnection"),
+                title: self.translate.instant("login-card.errors.signIn")
+            });
+            return;
+        }
         if (self.loginForm.valid) {
             Session.set(Constants.SESSION.EMAIL, self.loginInputs.email);
             Session.set(Constants.SESSION.LOADING, true);
@@ -83,11 +88,11 @@ export class LoginCardComponent extends MeteorComponent implements OnInit {
                             if (error.reason === Constants.METEOR_ERRORS.INCORRECT_PASSWORD) {
                                 console.log("Incorrect password");
                                 Session.set(Constants.SESSION.INCORRECT_PASSWORD, true);
-                                self.formControl.password.updateValueAndValidity(true);
+                                self.formControl.password.updateValueAndValidity({onlySelf:true});
                             } else if (error.reason === Constants.METEOR_ERRORS.USER_NOT_FOUND) {
                                 console.log("User not found");
                                 Session.set(Constants.SESSION.REGISTERED_ERROR, true);
-                                self.formControl.email.updateValueAndValidity(true);
+                                self.formControl.email.updateValueAndValidity({onlySelf:true});
                             } else if (error.reason === Constants.METEOR_ERRORS.NO_PASSWORD) {
                                 toastMessage = self.translate.instant("login-card.errors.socialSignIn");
                             } else {

@@ -1,12 +1,13 @@
 import {Component, NgZone} from '@angular/core';
-import {NavController, Alert} from "ionic-angular/es2015";
+import {NavController} from "ionic-angular/es2015";
 import {FormBuilder, Validators, AbstractControl, FormGroup} from '@angular/forms';
 import {MeteorComponent} from 'angular2-meteor';
+import {Session} from "meteor/session";
 import {Constants} from "../../../../../../../both/Constants";
 import {FormValidator} from "../../../../utils/FormValidator";
 import {ToastMessenger} from "../../../../utils/ToastMessenger";
 import {TranslateService} from "@ngx-translate/core";
-
+declare var Accounts;
 @Component({
     selector: "forgot-password-card",
     templateUrl: "forgot-password-card.html"
@@ -52,7 +53,7 @@ export class ForgotPasswordCardComponent extends MeteorComponent {
                     if (error.reason && error.reason === Constants.METEOR_ERRORS.USER_NOT_FOUND) {
                         console.log("User not found");
                         Session.set(Constants.SESSION.REGISTERED_ERROR, true);
-                        component.formControl.email.updateValueAndValidity(true);
+                        component.formControl.email.updateValueAndValidity({onlySelf:true});
                     } else {
                         var toastMessage = error.message;
                         if (error.reason) {

@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController, Alert} from "ionic-angular/es2015";
+import {NavController} from "ionic-angular/es2015";
 import {FormBuilder, Validators, AbstractControl, FormGroup} from '@angular/forms';
 import {MeteorComponent} from 'angular2-meteor';
-import {HomePage} from '../../../home/home';
+import {Session} from "meteor/session";
 import {Constants} from "../../../../../../../both/Constants";
 import {FormValidator} from "../../../../utils/FormValidator";
 import {ToastMessenger} from "../../../../utils/ToastMessenger";
 import {TranslateService} from "@ngx-translate/core";
-
+declare var Accounts;
 @Component({
     selector: "create-account-card",
     templateUrl: "create-account-card.html"
@@ -120,7 +120,7 @@ export class CreateAccountCardComponent extends MeteorComponent implements OnIni
                     if (error.reason) {
                         if (error.reason === Constants.METEOR_ERRORS.EMAIL_EXISTS) {
                             Session.set(Constants.SESSION.NOT_REGISTERED_ERROR, true);
-                            component.formControl.email.updateValueAndValidity(true);
+                            component.formControl.email.updateValueAndValidity({onlySelf:true});
                             error.reason = component.translate.instant(
                                 "create-account-card.errors.alreadyRegistered");
                         }
@@ -136,8 +136,6 @@ export class CreateAccountCardComponent extends MeteorComponent implements OnIni
                     });
                 } else {
                     console.log("Successfully created a new user account.");
-                    // TODO show a welcome alert dialog
-                    component.nav.setRoot(HomePage);
                 }
             });
         }

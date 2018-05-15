@@ -1,4 +1,6 @@
 import {Component, ViewChild, Input} from '@angular/core';
+import {Meteor} from "meteor/meteor";
+import {Session} from "meteor/session";
 import {Platform, ActionSheetController} from "ionic-angular/es2015";
 import {TranslateService} from "@ngx-translate/core";
 import {ImageHandler} from "../../utils/ImageHandler";

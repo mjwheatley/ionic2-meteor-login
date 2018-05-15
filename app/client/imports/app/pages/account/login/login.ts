@@ -1,5 +1,7 @@
 import {Component, OnInit, NgZone} from '@angular/core';
 import {MeteorComponent} from 'angular2-meteor';
+import {Meteor} from "meteor/meteor";
+import {Session} from "meteor/session";
 import {App, NavController} from "ionic-angular/es2015";
 import {Constants} from "../../../../../../both/Constants";
 import {TranslateService} from "@ngx-translate/core";
@@ -27,27 +29,29 @@ export class LoginPage extends MeteorComponent implements OnInit {
             {name: 'Facebook', class: 'facebook', icon:'facebook', color: "facebook"}
         ];
 
-        this.autorun(() => this.zone.run(() => {
-            this.forgotPassword = Session.get(Constants.SESSION.FORGOT_PASSWORD);
-            this.createAccount = Session.get(Constants.SESSION.CREATE_ACCOUNT);
-            this.resetPassword = Session.get(Constants.SESSION.RESET_PASSWORD);
+        Meteor.defer(() => {
+            this.autorun(() => this.zone.run(() => {
+                this.forgotPassword = Session.get(Constants.SESSION.FORGOT_PASSWORD);
+                this.createAccount = Session.get(Constants.SESSION.CREATE_ACCOUNT);
+                this.resetPassword = Session.get(Constants.SESSION.RESET_PASSWORD);
 
-            if (Session.get(Constants.SESSION.TRANSLATIONS_READY)) {
-                this.translate.get('page-login').subscribe((translation:any) => {
-                    // Set title of web page in browser
-                    this.app.setTitle(translation.signIn);
-                    if (this.createAccount) {
-                        this.pageTitle = translation.createAccount;
-                    } else if (this.forgotPassword) {
-                        this.pageTitle = translation.forgotPassword;
-                    } else if (this.resetPassword) {
-                        this.pageTitle = translation.resetPassword;
-                    } else {
-                        this.pageTitle = translation.signIn;
-                    }
-                });
-            }
-        }));
+                if (Session.get(Constants.SESSION.TRANSLATIONS_READY)) {
+                    this.translate.get('page-login').subscribe((translation:any) => {
+                        // Set title of web page in browser
+                        this.app.setTitle(translation.signIn);
+                        if (this.createAccount) {
+                            this.pageTitle = translation.createAccount;
+                        } else if (this.forgotPassword) {
+                            this.pageTitle = translation.forgotPassword;
+                        } else if (this.resetPassword) {
+                            this.pageTitle = translation.resetPassword;
+                        } else {
+                            this.pageTitle = translation.signIn;
+                        }
+                    });
+                }
+            }));
+        });
     }
 
     /*Life Cycle*/

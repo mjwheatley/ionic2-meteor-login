@@ -1,6 +1,9 @@
 import {Component, OnInit, NgZone} from '@angular/core';
 import {NavController} from "ionic-angular/es2015";
 import {MeteorComponent} from 'angular2-meteor';
+import {Meteor} from "meteor/meteor";
+import {Session} from "meteor/session";
+import {Tracker} from "meteor/tracker";
 import {FormBuilder, Validators, AbstractControl, FormGroup} from '@angular/forms';
 import {TranslateService} from "@ngx-translate/core";
 import {ToastMessenger} from "../../../../utils/ToastMessenger";
@@ -67,6 +70,9 @@ export class EditProfilePage extends MeteorComponent implements OnInit {
                     "profile.name.display": this.user.profile.name.given + " " + this.user.profile.name.family,
                     "profile.picture": Session.get(Constants.SESSION.imageUri)
                 }
+            }, {
+                multi:false,
+                upsert:false
             }, function (error, result) {
                 if (error) {
                     console.log("Error updating user profile: " + error.reason);

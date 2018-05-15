@@ -8,8 +8,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {HttpClientModule, HttpClient} from "@angular/common/http";
 import {Constants} from "../../../both/Constants";
 import {AppComponent} from "./app.component";
-import {SplashScreen} from "@ionic-native/splash-screen";
-import {StatusBar} from "@ionic-native/status-bar";
+import {LandingPage} from "./pages/landing/landing";
 import {HomePage} from "./pages/home/home";
 import {DemoComponent} from "./components/demo/demo.component";
 import {DemoDataService} from "./components/demo/demo-data.service";
@@ -40,10 +39,12 @@ import {AndroidPermissions} from "@ionic-native/android-permissions";
 
 
 
+
 @NgModule({
     // Components/Pages, Pipes, Directive
     declarations: [
         AppComponent,
+        LandingPage,
         HomePage,
         DemoComponent,
         WelcomeHeaderComponent,
@@ -63,6 +64,7 @@ import {AndroidPermissions} from "@ionic-native/android-permissions";
     // Pages
     entryComponents: [
         AppComponent,
+        LandingPage,
         HomePage,
         LoginPage,
         AboutPage,

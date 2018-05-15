@@ -1,14 +1,23 @@
 import {Component, OnInit, NgZone, ViewChild} from '@angular/core';
 import {MeteorComponent} from 'angular2-meteor';
-import {Platform, LoadingController, Loading} from "ionic-angular/es2015";
+import {Meteor} from "meteor/meteor";
+import {Session} from "meteor/session";
+import {App, NavController, Platform, LoadingController, Loading, AlertController, Alert} from "ionic-angular/es2015";
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {Constants} from "../../../both/Constants";
-import {HomePage} from "./pages/home/home";
 import {TranslateService} from "@ngx-translate/core";
+import {LandingPage} from "./pages/landing/landing";
 import {LoginPage} from "./pages/account/login/login";
+import {HomePage} from "./pages/home/home";
 import {AboutPage} from "./pages/about/about";
 import {AccountMenuPage} from "./pages/account/account-menu/account-menu";
+import {Device} from "@ionic-native/device";
+import {RequestHelper} from "./utils/RequestHelper";
+import {DeviceReady} from "./utils/DeviceReady";
+
+declare var navigator;
+declare var window;
 
 @Component({
     selector: "ion-app",
@@ -19,7 +28,7 @@ export class AppComponent extends MeteorComponent implements OnInit {
     @ViewChild('content') nav:any;
 
     // Set the root (or first) page
-    public rootPage:any = LoginPage;
+    public rootPage:any = LandingPage;
     public appName:string;
     public user:Meteor.User;
     public pages:Array<INavigationMenuPage>;
@@ -27,17 +36,23 @@ export class AppComponent extends MeteorComponent implements OnInit {
     public noUserPages:Array<INavigationMenuPage>;
     private isLoading:boolean = false;
     private loading:Loading;
+    private exitAlert:Alert;
+    private isIPhoneX:boolean = false;
 
-    constructor(public platform:Platform,
+    constructor(public app:App,
+                public platform:Platform,
                 public loadingCtrl:LoadingController,
+                public alertCtrl:AlertController,
                 public zone:NgZone,
                 public translate:TranslateService,
                 private splashscreen:SplashScreen, 
-                private statusbar:StatusBar) {
+                private statusbar:StatusBar,
+                private device:Device) {
         super();
     }
 
     ngOnInit() {
+        this.parseUrl();
         this.initializeApp();
         // set the nav menu title to the application name from settings.json
         this.appName = Meteor.settings.public["appName"];
@@ -48,12 +63,6 @@ export class AppComponent extends MeteorComponent implements OnInit {
             icon: "log-in",
             title: 'page-login.signIn',
             component: LoginPage,
-            rootPage: true
-        }];
-        this.userPages = [{
-            icon: "home",
-            title: 'page-home.title',
-            component: HomePage,
             rootPage: true
         }];
         this.pages = [{
@@ -74,7 +83,14 @@ export class AppComponent extends MeteorComponent implements OnInit {
             // Meteor.user() is a reactive variable.
             if (Meteor.user()) {
                 // Do something when user is present after initialization or after log in.
+                if (this.nav && this.nav.getActive()) {
+                    let viewCtrl = this.nav.getActive();
+                    if (viewCtrl.component === LoginPage) {
+                        this.nav.setRoot(HomePage);
+                    }
+                }
             }
+            this.setUserPages();
         }));
 
         this.autorun(() => this.zone.run(() => {
@@ -116,7 +132,20 @@ export class AppComponent extends MeteorComponent implements OnInit {
         });
     }
 
+    private setUserPages():void {
+        var hideHomePage:boolean = true;
+
+        this.userPages = [{
+            icon: "home",
+            title: 'page-home.title',
+            component: HomePage,
+            rootPage: true,
+            hide: hideHomePage
+        }];
+    }
+
     private initializeApp():void {
+        var self = this;
         this.platform.ready().then(() => {
             // The platform is now ready. Note: if this callback fails to fire, follow
             // the Troubleshooting guide for a number of possible solutions:
@@ -142,10 +171,31 @@ export class AppComponent extends MeteorComponent implements OnInit {
                 // StatusBar.overlaysWebView(false);
 
                 //* Complimentary hex value for primary color in theme/app.variables.scss *//
-                this.statusbar.backgroundColorByHexString("#672B8A");
-
+                this.statusbar.backgroundColorByHexString("#ad48e7");
 
                 this.splashscreen.hide();
+
+                DeviceReady.onDeviceReady();
+
+                self.platform.registerBackButtonAction(self.onBackButtonPressed.bind(self));
+                let deviceModel = this.device.model;
+                console.log("deviceModel: ", deviceModel);
+                let isIPhone:boolean = deviceModel.includes("iPhone");
+                if (isIPhone) {
+                    let modelInfo = this.device.model.replace("iPhone", Constants.EMPTY_STRING);
+                    console.log("modelInfo: ", modelInfo);
+                    let numbers = modelInfo.split(",");
+                    console.log("numbers: ", numbers);
+                    let modelNumber:number = parseInt(numbers[0]);
+                    console.log("modelNumber: ", modelNumber);
+                    if (modelNumber >= 10) {
+                        console.log("Device is iPhone X or newer");
+                        this.isIPhoneX = true;
+                    }
+                } else if (deviceModel === "x86_64") {
+                    this.isIPhoneX = true;
+                }
+                Session.set(Constants.SESSION.IS_IPHONE_X_LAYOUT, this.isIPhoneX);
             }
 
             Session.set(Constants.SESSION.PLATFORM_READY, true);
@@ -205,7 +255,7 @@ export class AppComponent extends MeteorComponent implements OnInit {
     private logout():void {
         this.user = null;
         Meteor.logout();
-        this.navigate({page: LoginPage, setRoot: true});
+        this.navigate({page: LandingPage, setRoot: true});
     }
 
     private navigate(location:{page:any, setRoot:boolean}):void {
@@ -225,11 +275,65 @@ export class AppComponent extends MeteorComponent implements OnInit {
             } 
         });
     }
+
+    private onBackButtonPressed(event:any):void {
+        var self = this;
+        //console.log("onBackButtonPressed()");
+        var activeNav:NavController = self.app.getActiveNav();
+        if (!activeNav.canGoBack()) {
+            //console.log("On Root Page, can't go back, prompt exit app.");
+            if (!self.exitAlert) {
+                self.exitAlert = self.alertCtrl.create({
+                    title: self.translate.instant("general.alerts.exit.title"),
+                    message: self.translate.instant("general.alerts.exit.message"),
+                    buttons: [{
+                        text: self.translate.instant("general.no"),
+                        role: 'cancel',
+                        handler: () => {
+                        }
+                    }, {
+                        text: self.translate.instant("general.yes"),
+                        handler: () => {
+                            navigator.app.exitApp();
+                        }
+                    }]
+                });
+                self.exitAlert.present();
+            } else {
+                this.exitAlert.dismiss();
+                this.exitAlert = null;
+            }
+        } else {
+            activeNav.pop();
+        }
+    }
+
+    private parseUrl():void {
+        if (!Meteor.isCordova) {
+            var path = RequestHelper.getPath(this.platform.url());
+            var urlParams:any = RequestHelper.getUrlParams(this.platform.url());
+            if (urlParams) {
+                var scope:any = urlParams.scope;
+                if (scope) {
+                    urlParams.scope = scope.split(',');
+                }
+                urlParams.string = RequestHelper.getUrlParamString(this.platform.url());
+            }
+            Session.set(Constants.SESSION.PATH, path);
+            Session.set(Constants.SESSION.URL_PARAMS, urlParams);
+            window.history.pushState('', document.title, Meteor.absoluteUrl());
+        }
+    }
+
+    private getOrientation():string {
+        return this.platform.isPortrait() ? "portrait" : "landscape";
+    }
 }
 
 export interface INavigationMenuPage {
     icon?:string,
     title:string,
     component:any,
-    rootPage?:boolean
+    rootPage?:boolean,
+    hide?:boolean
 }

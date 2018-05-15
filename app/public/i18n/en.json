@@ -8,7 +8,14 @@
     "continue": "Continue",
     "accept": "Accept",
     "submit": "Submit",
-    "save": "Save"
+    "save": "Save",
+    "noServerConnection": "Unable to communicate with app server.",
+    "alerts": {
+      "exit": {
+        "title": "Exit?",
+        "message": "Are you sure you want to exit this application?"
+      }
+    }
   },
   "menu": {
     "logout": "Sign Out"
@@ -34,7 +41,8 @@
     "itemNote": "Age:"
   },
   "page-about": {
-    "title": "About"
+    "title": "About",
+    "version": "Version"
   },
   "page-login": {
     "signIn": "Sign In",

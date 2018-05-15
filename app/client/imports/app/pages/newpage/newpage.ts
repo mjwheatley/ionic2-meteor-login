@@ -1,6 +1,8 @@
 import {Component, OnInit, NgZone} from '@angular/core';
 import {NavController} from "ionic-angular/es2015";
 import {MeteorComponent} from 'angular2-meteor';
+import {Meteor} from "meteor/meteor";
+import {Session} from "meteor/session";
 import {TranslateService} from "@ngx-translate/core";
 
 // TODO change selector

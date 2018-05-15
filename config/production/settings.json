@@ -1,9 +1,10 @@
 {
   "public": {
-    "appName": ""
+    "appName": "",
+    "version": "0.0.1",
+    "environment": "PRODUCTION"
   },
   "private": {
-    "environment": "PRODUCTION",
     "oauth2": {
       "providers": {
         "google": {
@@ -17,5 +18,5 @@
       }
     }
   },
-  "sample": "config/production/settings.json"
+  "path": "/config/production/settings.json"
 }

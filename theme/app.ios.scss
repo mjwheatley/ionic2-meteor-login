@@ -39,3 +39,106 @@ $ionic-theme: "Default";
 ion-menu .toolbar-ios ion-title {
   padding: 0 12px;
 }
+
+/*
+ * Fix tabbar positioning
+ */
+// Tabbar
+.tabbar.show-tabbar {
+  top: 64px !important;
+}
+
+/*
+ * iPhoneX fixes
+ */
+ion-tabs.iphonex[orientation=portrait] .tabbar.show-tabbar {
+  top: 88px !important;
+}
+
+ion-tabs.iphonex[orientation=landscape] .tabbar.show-tabbar {
+  top: 44px !important;
+}
+
+// Fixed-content
+ion-menu.iphonex[orientation=portrait] .menu-inner ion-content .fixed-content {
+  top: 88px !important;
+}
+
+ion-menu.iphonex[orientation=landscape] .menu-inner ion-content .fixed-content {
+  top: 44px !important;
+}
+
+ion-tabs.iphonex[orientation=portrait] ion-content .fixed-content {
+  margin-top: 137px !important;
+}
+
+ion-tabs.iphonex[orientation=landscape] ion-content .fixed-content {
+  margin-top: 93px !important;
+}
+
+// Scroll-content
+ion-menu.iphonex[orientation=portrait] .menu-inner ion-content .scroll-content {
+  margin-top: 88px !important;
+}
+
+ion-menu.iphonex[orientation=landscape] .menu-inner ion-content .scroll-content {
+  margin-top: 44px !important;
+}
+
+ion-tabs.iphonex[orientation=portrait] ion-content .scroll-content {
+  margin-top: 137px !important;
+}
+
+ion-tabs.iphonex[orientation=landscape] ion-content .scroll-content {
+  margin-top: 93px !important;
+}
+// End tabbar fix
+
+ion-nav .scroll-content, ion-modal .scroll-content {
+  padding-left: calc(constant(safe-area-inset-left));
+  padding-left: calc(env(safe-area-inset-left));
+  padding-right: calc(constant(safe-area-inset-right));
+  padding-right: calc(env(safe-area-inset-right));
+}
+
+// Fix menu-items
+ion-menu ion-header ion-toolbar .item-ios.item-block .item-inner {
+  padding-right: 0px;
+}
+
+ion-menu ion-header ion-toolbar.toolbar-ios {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+ion-nav ion-content .item-ios.item-block {
+  padding-left: 16px;
+}
+
+ion-nav ion-content .item-ios.item-block .item-inner {
+  padding-right: 8px;
+  background-position: right 14px center;
+}
+
+ion-nav ion-content .list-header-ios {
+  padding-left: 16px;
+}
+
+.toolbar-ios.app-icon-toolbar {
+  height: 150px;
+}
+
+.ios ion-menu .menu-inner ion-header ion-toolbar.toolbar-ios.app-icon-toolbar ion-title {
+  margin-top: 38px;
+  padding-left: calc(constant(safe-area-inset-left) + 12px);
+  padding-left: calc(env(safe-area-inset-left) + 12px);
+}
+
+.ios ion-menu .menu-inner ion-header ion-toolbar.toolbar-ios.app-icon-toolbar ion-title.iPhoneX-app-icon-toolbar {
+  padding-top: 24px;
+}
+
+ion-title ion-row {
+  justify-content: center;
+}
+

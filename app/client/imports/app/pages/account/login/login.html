@@ -9,15 +9,15 @@
 
 <ion-content>
 
-    <ion-card>
-        <ion-card-content>
-            <ion-list>
-                <div *ngFor="let oauthProvider of oauthProviders">
-                    <oauth-provider [oauthProvider]="oauthProvider"></oauth-provider>
-                </div>
-            </ion-list>
-        </ion-card-content>
-    </ion-card>
+    <!--<ion-card>-->
+        <!--<ion-card-content>-->
+            <!--<ion-list>-->
+                <!--<div *ngFor="let oauthProvider of oauthProviders">-->
+                    <!--<oauth-provider [oauthProvider]="oauthProvider"></oauth-provider>-->
+                <!--</div>-->
+            <!--</ion-list>-->
+        <!--</ion-card-content>-->
+    <!--</ion-card>-->
 
 
     <login-card [hidden]="forgotPassword || createAccount || resetPassword"></login-card>

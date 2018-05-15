@@ -18,7 +18,8 @@ export class Constants {
         RESET_PASSWORD_ERROR_MESSAGE: "resetPasswordErrorMessage",
         RESET_PASSWORD_TOKEN: "resetPasswordToken",
         WAS_PASSWORD_RESET: "wasPasswordReset",
-        EMAIL: "email"
+        EMAIL: "email",
+        IS_IPHONE_X_LAYOUT: "isIPhoneXLayout"
     };
 
     public static DEVICE:any = {
@@ -31,11 +32,21 @@ export class Constants {
         MD: "md"
     };
 
+    public static ENVIRONMENT:any = {
+        DEVELOPMENT: "DEVELOPMENT",
+        TEST: "TEST",
+        PRODUCTION: "PRODUCTION"
+    };
+
     public static METEOR_ERRORS:any = {
+        TIMEDOUT: "ETIMEDOUT",
+        SIGN_IN: "sign-in",
+        ACCOUNT_NOT_FOUND: "account-not-found",
         NO_PASSWORD: "User has no password set",
         USER_NOT_FOUND: "User not found",
         INCORRECT_PASSWORD: "Incorrect password",
         EMAIL_EXISTS: "Email already exists.",
+        ALREADY_EXISTS: 'already-exists',
         TOKEN_EXPIRED: "Token expired"
     };
 

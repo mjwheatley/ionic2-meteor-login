@@ -50,13 +50,6 @@ ion-icon[item-left] + .item-inner {
   font-style: italic;
 }
 
-.input-help-box {
-  margin-top: 5px;
-  font-size: 14px;
-  color: color($colors, primary);
-  font-style: italic;
-}
-
 .icon-error-box {
   margin-left: 60px;
   margin-top: 5px;
@@ -128,7 +121,7 @@ ion-item.item-input.input-has-icon.error *:before {
 /*Disabled Inputs*/
 
 /*change color of input line when disabled*/
-form ion-list ion-item.item-input-disabled .item-inner {
+ion-item.item.item-block.item-input.item-input-disabled .item-inner {
   border-bottom: 1px solid gray;
 }
 
@@ -138,13 +131,14 @@ ion-item.item-input.item-input-disabled *:before {
 }
 
 /*Change floating label color if disabled*/
-.item-input-disabled ion-label[floating] {
+ion-item.item-input.item-input-disabled ion-label[floating] {
   color: gray;
 }
 /*End*/
 
 /*Remove box shadow from input line*/
-.item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+.item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner,
+.item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
   box-shadow: none;
 }
 

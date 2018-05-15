@@ -14,6 +14,7 @@ import {Constants} from "../../../../../both/Constants";
 export class DemoComponent extends MeteorComponent implements OnInit {
     public data:Observable<Demo[]>;
     public demoListSubscription:Subscription;
+    public greeting;
 
     constructor(private demoDataService:DemoDataService,
                 public translate:TranslateService) {

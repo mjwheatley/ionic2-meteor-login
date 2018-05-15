@@ -2,6 +2,8 @@ import {TranslateService} from "@ngx-translate/core";
 import {ToastMessenger} from "./ToastMessenger";
 import {Constants} from "../../../../both/Constants";
 import {FileUtil} from "./FileUtil";
+import {Meteor} from "meteor/meteor";
+import {Session} from "meteor/session";
 /*
  * Meteor & Cordova packages are available but typescript does not know about them.
  * By declaring variables you tell typescript that they exists and it won't complain when compiling.

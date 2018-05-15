@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
+import {Meteor} from "meteor/meteor";
 import {NavController} from "ionic-angular/es2015";
-import {HomePage} from '../../../home/home';
 import {TranslateService} from "@ngx-translate/core";
 import {ToastMessenger} from "../../../../utils/ToastMessenger";
 import {Constants} from "../../../../../../../both/Constants";
@@ -49,7 +49,6 @@ export class OauthProviderComponent {
                         }
                     } else {
                         console.log("Successfully signed in with Google");
-                        component.nav.setRoot(HomePage);
                     }
                 });
                 break;
@@ -79,7 +78,6 @@ export class OauthProviderComponent {
                         }
                     } else {
                         console.log("Successfully signed in with Facebook");
-                        component.nav.setRoot(HomePage);
                     }
                 });
                 break;
