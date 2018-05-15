@@ -37,7 +37,7 @@ export class LanguageSelectComponent extends MeteorComponent {
         });
     }
 
-    private selectLanguage() {
+    public selectLanguage() {
         var self = this;
         let alert = self.alertCtrl.create({
             title: self.translate.instant("language-select.header"),

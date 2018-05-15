@@ -10,6 +10,7 @@ import {Constants} from "../../../both/Constants";
 import {AppComponent} from "./app.component";
 import {LandingPage} from "./pages/landing/landing";
 import {HomePage} from "./pages/home/home";
+import {NewPagePage} from "./pages/newpage/newpage";
 import {DemoComponent} from "./components/demo/demo.component";
 import {DemoDataService} from "./components/demo/demo-data.service";
 import {WelcomeHeaderComponent} from "./components/welcome-header/welcome-header";
@@ -37,15 +38,13 @@ import {Device} from "@ionic-native/device";
 import {Camera} from "@ionic-native/camera";
 import {AndroidPermissions} from "@ionic-native/android-permissions";
 
-
-
-
 @NgModule({
     // Components/Pages, Pipes, Directive
     declarations: [
         AppComponent,
         LandingPage,
         HomePage,
+        NewPagePage,
         DemoComponent,
         WelcomeHeaderComponent,
         LanguageSelectComponent,

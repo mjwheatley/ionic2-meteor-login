@@ -37,7 +37,7 @@ export class AppComponent extends MeteorComponent implements OnInit {
     private isLoading:boolean = false;
     private loading:Loading;
     private exitAlert:Alert;
-    private isIPhoneX:boolean = false;
+    public isIPhoneX:boolean = false;
 
     constructor(public app:App,
                 public platform:Platform,
@@ -308,7 +308,7 @@ export class AppComponent extends MeteorComponent implements OnInit {
         }
     }
 
-    private parseUrl():void {
+    public parseUrl():void {
         if (!Meteor.isCordova) {
             var path = RequestHelper.getPath(this.platform.url());
             var urlParams:any = RequestHelper.getUrlParams(this.platform.url());
@@ -325,7 +325,7 @@ export class AppComponent extends MeteorComponent implements OnInit {
         }
     }
 
-    private getOrientation():string {
+    public getOrientation():string {
         return this.platform.isPortrait() ? "portrait" : "landscape";
     }
 }

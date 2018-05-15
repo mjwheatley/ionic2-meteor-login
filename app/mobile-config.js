@@ -3,7 +3,7 @@ App.info({
     name: 'Ionic2-Meteor-Login',
     description: 'A boilerplate setup for an Ionic2 styled Angular2-Meteor application with support for Meteor accounts and Oauth services.',
     author: 'Matthew Wheatley',
-    email: 'mjwheatley@tanoshiietnertainment.com',
+    email: 'mattjwheatley@gmail.com',
     version: '0.0.1'
 });
 
@@ -55,6 +55,10 @@ App.setPreference('StatusBarOverlaysWebView', 'true');
 App.configurePlugin('cordova-plugin-camera', {
     CAMERA_USAGE_DESCRIPTION: "This application will use your phone's camera to take a selfie for your profile picture.",
     PHOTOLIBRARY_USAGE_DESCRIPTION: "This application will access your photo library to select a photo for your profile picture."
+});
+
+App.configurePlugin('cordova-android-support-gradle-release', {
+    ANDROID_SUPPORT_VERSION: "27.+"
 });
 
 App.appendToConfig(`
