@@ -86,7 +86,7 @@ export class AppComponent extends MeteorComponent implements OnInit {
                 if (this.nav && this.nav.getActive()) {
                     let viewCtrl = this.nav.getActive();
                     if (viewCtrl.component === LoginPage) {
-                        this.nav.setRoot(HomePage);
+                        this.nav.setRoot(LandingPage);
                     }
                 }
             }
@@ -127,6 +127,7 @@ export class AppComponent extends MeteorComponent implements OnInit {
                 if (this.isLoading && this.loading) {
                     this.loading.dismiss();
                     this.loading = null;
+                    this.isLoading = false;
                 }
             }
         });

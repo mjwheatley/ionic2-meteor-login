@@ -37,6 +37,6 @@ $background-color: #c0c0c0;
 
 @each $color in $colors {
   [background-color="#{nth($color, 1)}"] {
-    background-color: #{nth($color, 2)};
+    background-color: #{nth($color, 2)} !important;
   }
 }

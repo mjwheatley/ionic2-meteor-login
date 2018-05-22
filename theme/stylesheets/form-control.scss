@@ -10,7 +10,7 @@ form ion-list > ion-item-sliding:last-child .item .item-inner {
 }
 
 /*Remove bottom border when input field becomes invalid*/
-ion-input.ng-invalid.ng-touched:after {
+ion-input.ng-invalid.ng-touched::after {
   border-bottom: none;
 }
 

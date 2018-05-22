@@ -20,7 +20,7 @@ export class LandingPage extends MeteorComponent implements OnInit {
 
     constructor(public nav:NavController,
                 public menu:MenuController,
-                public app:App,,
+                public app:App,
                 public zone:NgZone,
                 public translate:TranslateService) {
         super();
@@ -51,7 +51,7 @@ export class LandingPage extends MeteorComponent implements OnInit {
 
     private delayForUser():void {
         Session.set(Constants.SESSION.LOADING, true);
-        Meteor.setTimeout(() => {
+        setTimeout(() => {
             Session.set(Constants.SESSION.LOADING, false);
             this.setRootPage();
         }, 2500);
