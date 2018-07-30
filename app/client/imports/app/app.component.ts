@@ -255,8 +255,11 @@ export class AppComponent extends MeteorComponent implements OnInit {
 
     private logout():void {
         this.user = null;
-        Meteor.logout();
-        this.navigate({page: LandingPage, setRoot: true});
+        Session.set(Constants.SESSION.LOADING, true);
+        Meteor.logout(() => {
+            Session.set(Constants.SESSION.LOADING, false);
+            this.navigate({page: LandingPage, setRoot: true});
+        });
     }
 
     private navigate(location:{page:any, setRoot:boolean}):void {
